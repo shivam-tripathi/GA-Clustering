@@ -1,3 +1,6 @@
+#ifndef __LOAD_DATA_H__
+#define __LOAD_DATA_H__
+
 #include "utils.h"
 
 class LoadData {
@@ -10,3 +13,5 @@ public:
 	int switch_type(std::string);
 	void load_data();
 };
+
+#endif // __LOAD_DATA_H__
