@@ -16,16 +16,13 @@ void Chromosome :: populate() {
 		v.push_back(i);
 	}
 
-	// printf("%d <==> %d\n", element_count, clusters_count);
 	int cluster_size = element_count/clusters_count;
-	printf("cluster_size max : %d\n", cluster_size);
 
 	int size = element_count;
 	for (int i=1; i<=clusters_count; i++) {
 
 		cluster c;
 		c.size = uniform_int(std::max(1, cluster_size-10), cluster_size);
-		printf("\tCluster %d of size %d \n", i, c.size);
 
 		std::vector<int> elements;
 		if (i < clusters_count) {
@@ -49,18 +46,17 @@ void Chromosome :: populate() {
 			int index = elements[i];
 			int next_index = elements[i+1];
 			int prev_index = elements[i-1];
-			printf("\t\t%d\n", v[index]);
+
 			nodes[v[index]].l = v[prev_index];
 			nodes[v[index]].r = v[next_index];
-			// add_cluster_intance(node.mean, v[index]);
 		}
 
-		std::cout << "\tCluster " << i << " of " << c.size << " completed " << std::endl;
 		clusters.push_back(c);
 
 		// Erase elements already used for referential integrity
 		for(int i=0; i<elements.size(); i++) {
 			assert(elements[i]-i < v.size());
+			assert (v[elements[i]-i] == *(v.begin()+elements[i]-i));
 			v.erase(v.begin() + elements[i] - i);
 		}
 	}
