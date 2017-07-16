@@ -1,7 +1,6 @@
 #include "utils.h"
 
 int uniform_int(int l, int r, int count, std::vector<int> &arr) {
-	// std::default_random_engine generator;
 	std::uniform_int_distribution<int> distribution(l, r);
 	auto dice = std::bind (distribution, generator);
 	if (count == 1) {
@@ -22,7 +21,6 @@ int uniform_int(int l, int r, int count, std::vector<int> &arr) {
 }
 
 float uniform_float(int l, int r, int count, std::vector<float> &arr) {
-	// std::default_random_engine generator;
 	std::uniform_int_distribution<int> distribution(l, r);
 	auto dice = std::bind(distribution, generator);
 	if (count == 1) {

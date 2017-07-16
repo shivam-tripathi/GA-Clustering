@@ -29,6 +29,9 @@ struct cluster {
 	int size;
 	int end;
 	instance mean;
+	cluster()
+	: mean(instance(0,0,0,0,0))
+	{}
 };
 
 struct node {
