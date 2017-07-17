@@ -11,7 +11,6 @@
 static std::vector<int> DEFAULT_INT_VECTOR;
 static std::vector<float> DEFAULT_FLOAT_VECTOR;
 static std::random_device rd;
-static std::mt19937 generator(rd());
 
 struct instance {
 	float slength;
@@ -37,8 +36,10 @@ struct cluster {
 struct node {
 	int l;
 	int r;
+	int pos;
+	instance cum_sum;
 	node(int l, int r)
-	: l(l), r(r)
+	: l(l), r(r), pos(-1), cum_sum(instance(0,0,0,0,0))
 	{}
 };
 
