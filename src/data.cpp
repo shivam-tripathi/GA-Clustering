@@ -22,7 +22,7 @@ void Data :: add_instances(instance &mean, const instance &ins) {
 }
 
 float Data :: add_instance(const instance &instance) {
-	return (instance.slength + instance.swidth + instance.plength + instance.pwidth);
+	return (instance.slength + instance.swidth + instance.plength + instance.pwidth + instance.type);
 }
 
 void Data :: avg_instance(instance &mean, int size) {
