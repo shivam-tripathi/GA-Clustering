@@ -10,8 +10,14 @@ public:
 	std::vector<node> nodes;
 	std::vector<cluster> clusters;
 	int clusters_count;
+	float mean;
+
 	Chromosome(Data &);
+	Chromosome(Chromosome, Chromosome);
+	void compute();
 	void populate();
 };
+
+bool cmp(Chromosome &, Chromosome &);
 
 #endif // __CHROMOSOME_H__
