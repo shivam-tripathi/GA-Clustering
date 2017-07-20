@@ -4,14 +4,28 @@
 #include "chromosome.h"
 #include "data.h"
 
+struct Solution{
+	Chromosome *chromosome;
+	int domination_count;
+	std::vector<int> dominated_solutions;
+	Solution(Chromosome *chromo) {
+		chromosome = chromo;
+		domination_count = 0;
+	}
+};
+
 class Population {
 public:
 	Data *data;
-	std::vector<Chromosome> chromosomes;
+	std::vector<Solution> solutions;
 
 	Population(Data &, int);
-	Population(std::vector<Chromosome> &);
-	void populate(int n);
+};
+
+struct Cmp {
+	bool operator() (Solution &a, Solution &b) const {
+		return a.domination_count < b.domination_count;
+	}
 };
 
 #endif // __POPULATIONH__
