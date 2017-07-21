@@ -6,10 +6,16 @@
 
 struct Solution{
 	Chromosome *chromosome;
+	int index;
+	int rank;
+	int distance;
 	int domination_count;
 	std::vector<int> dominated_solutions;
-	Solution(Chromosome *chromo) {
+	Solution(Chromosome *chromo, int i) {
+		index = i;
 		chromosome = chromo;
+		rank = -1;
+		distance = 0;
 		domination_count = 0;
 	}
 };
@@ -20,11 +26,14 @@ public:
 	std::vector<Solution> solutions;
 
 	Population(Data &, int);
+	void print_population();
 };
 
-struct Cmp {
+struct CmpSolution {
 	bool operator() (Solution &a, Solution &b) const {
-		return a.domination_count < b.domination_count;
+		if (a.domination_count != b.domination_count)
+			return a.domination_count > b.domination_count;
+		return a.distance > b.distance;
 	}
 };
 
