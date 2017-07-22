@@ -19,5 +19,6 @@ public:
 };
 
 bool cmp(Chromosome &, Chromosome &);
+void print_chromosome(Chromosome *);
 
 #endif // __CHROMOSOME_H__
