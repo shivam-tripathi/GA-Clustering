@@ -19,7 +19,6 @@ void Chromosome :: populate() {
 		v.push_back(i);
 	}
 
-	// std::vector<int> check;
 	int cluster_size = element_count/clusters_count;
 
 	int size = element_count;
@@ -52,12 +51,9 @@ void Chromosome :: populate() {
 		int pos = 1;
 		if (elements.size() > 1) {
 			nodes[c.begin].r = v[elements[1]];
-			// printf("\t\t\t\tClusters no. %d ===> %d\n", i, c.begin);
 			data->add_instances(c.mean, data->instances[c.begin]);
 			nodes[c.begin].cum_sum = c.mean;
 			nodes[c.begin].pos = pos++;
-			// check.push_back(v[elements[0]]);
-			// check.push_back(v[elements[elements.size()-1]]);
 		}
 
 		for(int j=1; j<elements.size()-1; j++) {
@@ -70,18 +66,14 @@ void Chromosome :: populate() {
 			data->add_instances(c.mean, data->instances[v[index]]);
 			nodes[v[index]].cum_sum = c.mean;
 			nodes[v[index]].pos = pos++;
-			// printf("\t\t\t\tClusters no. %d ===> %d\n", i, v[index]);
-			// check.push_back(v[elements[i]]);
 		}
 
 		data->add_instances(c.mean, data->instances[c.end]);
 		nodes[c.end].cum_sum = c.mean;
 		nodes[c.end].pos = pos;
-		// printf("\t\t\t\tClusters no. %d ===> %d\n\n\n", i, v[c.end]);
 
 		clusters.push_back(c);
 		data->avg_instance(c.mean, c.size);
-		// sort(check.begin(), check.end());
 
 		// Erase elements already used for referential integrity
 		for(int j=0; j<elements.size(); j++) {
@@ -90,50 +82,50 @@ void Chromosome :: populate() {
 			v.erase(v.begin() + elements[j] - j);
 		}
 	}
-	// for(auto k: check) printf("\t\t%d\n", k);
-	// printf("\n\n");
 }
 
 void Chromosome :: compute() {
 	mean = 0;
-	// printf("Total clusters %lu <==> %d \n", clusters.size(), clusters_count);
-	// std::vector<int> v;
 	for(int i=0; i<clusters.size(); i++) {
 		int j = clusters[i].begin;
-		// printf("\n Cluster size %d <==> %d\n", clusters[i].size, nodes[clusters[i].end].pos);
 		while(true) {
-			// printf("%d ", j);
-			// v.push_back(j);
-			// mean += data->find_distance(clusters[i].mean, data->instances[i]);
+			float dat = data->find_distance(clusters[i].mean, data->instances[j]);
+			mean += dat;
 			if (j == clusters[i].end) break;
 			j = nodes[j].r;
 		}
 	}
-	// sort(v.begin(), v.end());
-	// for(auto k : v) std::cout << k << std::endl;
+	printf("Mean = %f. Cluster count = %d\n", mean, clusters_count);
 }
 
-
+// Does Chromosome a dominates b?
 bool cmp(Chromosome &a, Chromosome &b) {
+	printf("%d cmp %f ||| %d cmp %f ==> ", a.clusters_count, a.mean, b.clusters_count, b.mean);
+
 	int ca=0, cb=0;
 	// clusters_count must be as small as possible
 	// Mean should be as small as possible
-	if (a.clusters_count > b.clusters_count) {
+	if (a.clusters_count < b.clusters_count) {
 		ca++;
 	}
-	else if (a.clusters_count < b.clusters_count) {
+	else if (a.clusters_count > b.clusters_count) {
 		cb++;
 	}
 
-	if (a.mean > b.mean) {
-		cb++;
-	}
-	else if (a.mean < b.mean) {
+	if (a.mean < b.mean) {
 		ca++;
 	}
+	else if (a.mean > b.mean) {
+		cb++;
+	}
+
+	printf("%d %d\n", ca, cb);
 
 	if (ca == cb) return false;
 	if (ca > cb) return true;
 	else return false;
 }
 
+void print_chromosome(Chromosome *chromo) {
+	printf("%f %d", chromo->mean, chromo->clusters_count);
+}
