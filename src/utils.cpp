@@ -34,3 +34,7 @@ float uniform_float(int l, int r, int count, std::vector<float> &arr) {
 	}
 	return 0;
 }
+
+void print_instance(instance &ins) {
+	printf("%f %f %f %f %d\n", ins.slength, ins.swidth, ins.plength, ins.pwidth, ins.type);
+}
