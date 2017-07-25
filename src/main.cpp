@@ -1,6 +1,6 @@
 #include "nsga2.h"
 
-void run(Population &);
+void run(Population *);
 
 int main(int argc, char const *argv[]) {
 	std::string name;
@@ -10,9 +10,13 @@ int main(int argc, char const *argv[]) {
 	std::cout << name << std::endl;
 	Data data(name);
 	Population population(data, 10);
-	run(population);
+	printf("\n\n\n\n");
+	run(&population);
 	return 0;
 }
 
-void run(Population &population) {
+void run(Population *population) {
+	printf("Beginning execution .... \n");
+	NSGA2 solve(population);
+	solve.sort();
 }
