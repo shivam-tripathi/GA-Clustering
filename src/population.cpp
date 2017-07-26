@@ -20,3 +20,9 @@ void Population :: print_population() {
 		// printf("\n");
 	}
 }
+
+void Population::reset_index() {
+	for(int i=0; i<solutions.size(); i++) {
+		solutions[i].index = i;
+	}
+}

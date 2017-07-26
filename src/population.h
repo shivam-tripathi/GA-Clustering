@@ -7,14 +7,12 @@
 struct Solution{
 	Chromosome *chromosome;
 	int index;
-	int rank;
-	int distance;
+	float distance;
 	int domination_count;
 	std::vector<int> dominated_solutions;
 	Solution(Chromosome *chromo, int i) {
 		index = i;
 		chromosome = chromo;
-		rank = -1;
 		distance = 0;
 		domination_count = 0;
 	}
@@ -27,6 +25,7 @@ public:
 
 	Population(Data &, int);
 	void print_population();
+	void reset_index();
 };
 
 struct CmpSolution {
