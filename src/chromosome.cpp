@@ -44,7 +44,6 @@ void Chromosome :: populate() {
 			}
 		}
 
-
 		c.begin = v[elements[0]];
 		c.end = v[elements[elements.size()-1]];
 
@@ -100,7 +99,7 @@ void Chromosome :: compute() {
 
 // Does Chromosome a dominates b?
 bool cmp(Chromosome &a, Chromosome &b) {
-	printf("%d cmp %f ||| %d cmp %f ==> ", a.clusters_count, a.mean, b.clusters_count, b.mean);
+	// printf("%d cmp %f ||| %d cmp %f ==> ", a.clusters_count, a.mean, b.clusters_count, b.mean);
 
 	int ca=0, cb=0;
 	// clusters_count must be as small as possible
@@ -119,7 +118,7 @@ bool cmp(Chromosome &a, Chromosome &b) {
 		cb++;
 	}
 
-	printf("%d %d\n", ca, cb);
+	// printf("%d %d\n", ca, cb);
 
 	if (ca == cb) return false;
 	if (ca > cb) return true;
