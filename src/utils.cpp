@@ -71,3 +71,7 @@ float normal_float(int mean, int sd, int count, std::vector<float> &arr) {
 void print_instance(instance &ins) {
 	printf("%f %f %f %f %d\n", ins.slength, ins.swidth, ins.plength, ins.pwidth, ins.type);
 }
+
+void print_clusters(cluster &c) {
+	printf("Begin: %d End: %d Size: %d\n", c.begin, c.end, c.size);
+}
