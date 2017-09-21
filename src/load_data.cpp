@@ -1,10 +1,14 @@
 #include "load_data.h"
 
+
 LoadData :: LoadData(std::string s) {
 	this->name_csv = s;
 	load_data();
-	std::cout << "Read " << count << " records from " << name_csv << " file." << std::endl;
+	std::cout << "Successfully read " << count << " records from " << name_csv << " file.\n" << std::endl;
+	for(int i=0; i<50; i++) printf("*");
+	printf("\n");
 }
+
 
 void LoadData :: load_data() {
 	int id;
@@ -13,7 +17,7 @@ void LoadData :: load_data() {
 	size_t size = 100;
 
 	if(std::FILE *f = std::fopen(name_csv.c_str(), "r")) {
-		std::cout << "Beginning " << std::endl;
+		std::cout << "\nLoading data ..." << std::endl;
 		getline(&str, &size, f);
 		while(std::fscanf(f, "%d,%f,%f,%f,%f,%s", &id, &a, &b, &c, &d, str) == 6) {
 			std::string s(str);
