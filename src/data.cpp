@@ -35,10 +35,10 @@ void Data :: avg_instance(instance &mean, int size) {
 
 float Data :: find_distance(instance &a, instance &b) {
 	float ans = 0;
-	ans += (a.slength - b.slength) * (a.slength - b.slength);
-	ans += (a.swidth - b.swidth) * (a.swidth - b.swidth);
-	ans += (a.plength - b.plength) * (a.plength - b.plength);
-	ans += (a.pwidth - b.pwidth) * (a.pwidth - b.pwidth);
-	ans += (a.type - b.type) * (a.type - b.type);
+	ans = ans + (a.slength - b.slength) * (a.slength - b.slength);
+	ans = ans + (a.swidth - b.swidth) * (a.swidth - b.swidth);
+	ans = ans + (a.plength - b.plength) * (a.plength - b.plength);
+	ans = ans + (a.pwidth - b.pwidth) * (a.pwidth - b.pwidth);
+	ans = ans + (a.type - b.type) * (a.type - b.type);
 	return ans;
 }
