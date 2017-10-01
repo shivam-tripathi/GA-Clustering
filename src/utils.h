@@ -12,6 +12,7 @@
 static std::vector<int> DEFAULT_INT_VECTOR;
 static std::vector<float> DEFAULT_FLOAT_VECTOR;
 static std::random_device rd;
+const int inf = (int)1e9+100;
 
 struct instance {
 	float slength;
