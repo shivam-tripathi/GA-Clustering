@@ -5,14 +5,15 @@
 
 class Chromosome {
 public:
+	int index;
 	int element_count;
-	Data *data;
+	Data &data;
 	std::vector<node> nodes;
 	std::vector<cluster> clusters;
 	int clusters_count;
 	float mean;
 
-	Chromosome(Data &);
+	Chromosome(Data &, int);
 	Chromosome(Chromosome, Chromosome);
 	void compute();
 	void populate();

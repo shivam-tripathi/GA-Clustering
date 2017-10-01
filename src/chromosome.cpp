@@ -1,9 +1,10 @@
 #include "chromosome.h"
 
-Chromosome :: Chromosome(Data &_data) {
+Chromosome :: Chromosome(Data &data, int index) : data(data) {
+	this->index = index;
 	this->mean = 0;
-	this->data = &(_data);
-	this->element_count = data->count;
+	// this->data = &(_data);
+	this->element_count = data.count;
 	this->clusters_count = uniform_int(1, 11);
 	for(int i=0; i<element_count; i++) {
 		nodes.push_back(node(i, i));
@@ -50,7 +51,7 @@ void Chromosome :: populate() {
 		int pos = 1;
 		if (elements.size() > 1) {
 			nodes[c.begin].r = v[elements[1]];
-			data->add_instances(c.mean, data->instances[c.begin]);
+			data.add_instances(c.mean, data.instances[c.begin]);
 			nodes[c.begin].cum_sum = c.mean;
 			nodes[c.begin].pos = pos++;
 		}
@@ -62,17 +63,17 @@ void Chromosome :: populate() {
 
 			nodes[v[index]].l = v[prev_index];
 			nodes[v[index]].r = v[next_index];
-			data->add_instances(c.mean, data->instances[v[index]]);
+			data.add_instances(c.mean, data.instances[v[index]]);
 			nodes[v[index]].cum_sum = c.mean;
 			nodes[v[index]].pos = pos++;
 		}
 
-		data->add_instances(c.mean, data->instances[c.end]);
+		data.add_instances(c.mean, data.instances[c.end]);
 		nodes[c.end].cum_sum = c.mean;
 		nodes[c.end].pos = pos;
 
 		clusters.push_back(c);
-		data->avg_instance(c.mean, c.size);
+		data.avg_instance(c.mean, c.size);
 
 		// Erase elements already used for referential integrity
 		for(int j=0; j<elements.size(); j++) {
@@ -88,7 +89,7 @@ void Chromosome :: compute() {
 	for(int i=0; i<clusters.size(); i++) {
 		int j = clusters[i].begin;
 		while(true) {
-			float dat = data->find_distance(clusters[i].mean, data->instances[j]);
+			float dat = data.find_distance(clusters[i].mean, data.instances[j]);
 			mean += dat;
 			if (j == clusters[i].end) break;
 			j = nodes[j].r;

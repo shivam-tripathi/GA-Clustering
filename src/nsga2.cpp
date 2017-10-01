@@ -1,22 +1,66 @@
 #include "nsga2.h"
 
-NSGA2 :: NSGA2(Population *pop) {
+
+// NSGA2 constructor: Simply creates an instance of NSGA2 solution
+// Initialised using passed Population instance pointer
+NSGA2 :: NSGA2(Population &population) : population(population) {
 	printf("Inistialising NSGA2 object ...\n");
-	pop->print_population();
-	this->population = pop;
-	solution_count = ((this->population)->solutions).size();
-	printf("NSGA2 initalised with solution count = %d. Ready to run.\n\n\n\n\n", solution_count);
+	// Print the present population
+	population.print_population();
+
+	// this->population = population;
+
+	// Number of chromosomes
+	solution_count = population.solutions.size();
+
+	for(int i=0; i<solution_count; i++) {
+		sorting.push_back(Sorting(0, 0, 0));
+	}
+
+	printf("\nNSGA2 initalised with solution count = %d. Ready to run.\n\n", solution_count);
+
+	// Pretty printing
+	for(int i=0; i<50; i++) printf("*");
+	printf("\n");
 }
 
-void NSGA2::sort(int erase) {
 
-	printf("Sorting ... \n");
+// Base function - sorts the population
+void NSGA2 :: sort() {
+	printf("Beginning sorting ...\n");
+
+	// Reset sorting vector
+	reset();
+
+	// Set domination values for the solutions
+	set_domination();
+
+	// Set distance values for the solutions
+	set_distance();
+
+	printf("Distance set.\n");
+}
+
+
+void NSGA2::reset() {
+	for(int i=0; i<sorting.size(); i++) {
+		sorting[i].index = sorting[i].domination_count = sorting[i].distance = 0;
+		sorting[i].domination_set.clear();
+	}
+}
+
+
+
+void NSGA2::_sort(int erase) {
+	/*printf("Beginning sorting ... \n");
 
 	set_distance();
 	printf("Distance set.\n");
+
 	set_domination_count();
 	printf("Domination count set.\n");
 
+	// New sorting vector to store sorted chromosomes
 	std::vector<Sorting> sorting;
 	sorting.clear();
 
@@ -43,12 +87,38 @@ void NSGA2::sort(int erase) {
 	for(auto elem : population->solutions) {
 		printf(">> %d elem\n", elem.index);
 	}
-	population->reset_index();
+	population->reset_index();*/
 }
+
+
+void NSGA2::set_domination() {
+
+	for(int i=0; i<solution_count; i++) {
+		printf("Setting domination count for chromosome index %d\n", population.solutions[i].index);
+		for(int j=0; j<solution_count; j++) {
+			if (i == j) {
+				j++;
+				continue;
+			}
+
+			printf("Checking against %d :: \t\t", population.solutions[i].index);
+
+			if(cmp(population.solutions[i], population.solutions[j])) {
+				sorting[j].domination_count++;
+				sorting[i].domination_set.push_back(j);
+				// population->solutions[j].domination_count++;
+				// population->solutions[i].dominated_solutions.push_back(k);
+				printf("\t\t %d dominates %d \n", i, j);
+			}
+		}
+	}
+}
+
 
 
 void NSGA2::set_domination_count() {
 
+	/*
 	for(int i=0; i<solution_count; i++) {
 		population->solutions[i].domination_count=0;
 		population->solutions[i].dominated_solutions.clear();
@@ -75,9 +145,15 @@ void NSGA2::set_domination_count() {
 		}
 		printf("\n");
 	}
+	*/
 }
 
+
 void NSGA2::set_distance() {
+
+}
+
+/*void NSGA2::set_distance() {
 
 	for(int i=0; i<solution_count; i++) {
 		population->solutions[i].distance=0;
@@ -113,4 +189,4 @@ void NSGA2::set_distance() {
 			population->solutions[second[i].index].distance += ((second[i+1].value - second[i-1].value) / divsecond);
 		}
 	}
-}
+}*/
