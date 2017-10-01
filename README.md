@@ -27,27 +27,34 @@ Structure of the codebase:
 * data
    + Iris.csv
 * src
-    + README.md
-    + a.out
-    + chromosome.cpp
-    + chromosome.h
-    + data.cpp
-    + data.h
-    + load_data.cpp
-    + load_data.h
-    + main.cpp
-    + nsga2.cpp
-    + nsga2.h
-    + population.cpp
-    + population.h
-    + utils.cpp
     + utils.h
+    + utils.cpp _(Base files with implementation and includes required for running of the entire software)_
+
+    + load_data.cpp
+    + load_data.h _(Files which input csv files)_
+
+    + data.h
+    + data.cpp _(Base objects for storing data loaded using above)_
+
+    + chromosome.cpp
+    + chromosome.h _(Base objects to form and store chromosomes of data)_
+
+    + population.h
+    + population.cpp _(Base objects to form a population of chromosomes)_
+
+    + nsga2.h
+    + nsga2.cpp _(NSGA2 abstract implementation)_
+
+    + main.cpp _(main file)_
+
+    + README.md _(This file)_
+
 
 
 #### Trivia:
 
 All source code resides in the src directory.
 
-All tests (will) reside in the test directory.
+All tests (will) reside in the test directory (if written).
 
 Presently only one data file is present, Iris.csv in the data folder.
