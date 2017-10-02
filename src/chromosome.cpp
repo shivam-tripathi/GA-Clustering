@@ -3,7 +3,6 @@
 Chromosome :: Chromosome(Data &data, int index) : data(data) {
 	this->index = index;
 	this->mean = 0;
-	// this->data = &(_data);
 	this->element_count = data.count;
 	this->clusters_count = uniform_int(1, 11);
 	for(int i=0; i<element_count; i++) {
@@ -12,6 +11,25 @@ Chromosome :: Chromosome(Data &data, int index) : data(data) {
 	this->populate();
 	this->compute();
 }
+
+
+Chromosome :: Chromosome(const Chromosome &ch) : data(ch.data) {
+	index = ch.index;
+	mean = ch.mean;
+	element_count = ch.element_count;
+	clusters_count = ch.clusters_count;
+	// Copy remaining data
+}
+
+void Chromosome::operator = (const Chromosome &ch) {
+	data = ch.data;
+	index = ch.index;
+	mean = ch.mean;
+	element_count = ch.element_count;
+	clusters_count = ch.clusters_count;
+	// Copy remaining data
+}
+
 
 void Chromosome :: populate() {
 	std::vector<int> v;
@@ -84,6 +102,7 @@ void Chromosome :: populate() {
 	}
 }
 
+
 void Chromosome :: compute() {
 	mean = 0;
 	for(int i=0; i<clusters.size(); i++) {
@@ -97,6 +116,7 @@ void Chromosome :: compute() {
 	}
 	printf("Mean = %f. Cluster count = %d\n", mean, clusters_count);
 }
+
 
 // Does Chromosome a dominates b?
 bool cmp(Chromosome &a, Chromosome &b) {

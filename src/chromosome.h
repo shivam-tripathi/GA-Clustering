@@ -3,6 +3,8 @@
 
 #include "data.h"
 
+
+// Base class to store Chromosomes in the function
 class Chromosome {
 public:
 	int index;
@@ -14,7 +16,8 @@ public:
 	float mean;
 
 	Chromosome(Data &, int);
-	Chromosome(Chromosome, Chromosome);
+	Chromosome(const Chromosome &);
+	void operator = (const Chromosome &);
 	void compute();
 	void populate();
 };
