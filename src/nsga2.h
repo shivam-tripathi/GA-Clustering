@@ -70,6 +70,18 @@ struct CmpErase {
 
 
 // Base class for NSGA2 algorithm
+// This class simply sorts the population object passed to it
+// It approaches the problem in a non destructive way, using Sorting structure
+// The Sorting structure initially stores the objective values of all related functions and index
+// The vector of sorting structure is used then to produce sorted indexes of the chromosomes
+// Using sorting vector as base, the original population is rearranged such that it is ordered
+// in descending order of priority.
+// This modified population object then can be used for crossovers.
+// Thus it provides and abstraction of NSGA2 making it completely independent of input population object
+// and other GA details.
+// Objective functions have been tuned according to this problem, so inorder to use this code piece,
+// one would have to take care of objective functions occurences in this file and associated cpp file.
+// After that simply run it to get desired results.
 class NSGA2 {
 public:
 
@@ -79,14 +91,15 @@ public:
 	// std::vector<Chromosome> final;
 
 	NSGA2(Population &);
-	void sort();
+	// Flushes the sorting state
 	void reset();
-	void _sort(int);
+	// Sets the index of the population object chromosomes in the order they are arranged
+	void set();
 	// Computes distance
 	void set_distance();
-	// Computes domination count
+	// Computes domination
 	void set_domination();
-	void set_domination_count();
+	void sort();
 };
 
 #endif // __NSGA_2__
