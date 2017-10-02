@@ -1,7 +1,7 @@
 #include "population.h"
 
 
-Population :: Population(Data &data, int n) : data(data) {
+Population :: Population(Data &data, int n) {
 	// Initialise population's data, clean solutions vector (incase already filled)
 	// this->data = &(data);
 	solutions.clear();
@@ -14,10 +14,6 @@ Population :: Population(Data &data, int n) : data(data) {
 		// solutions.push_back(Solution(chromo, i));
 		solutions.push_back(Chromosome(data, i));
 
-		// logging
-		// printf("\t\t%lu ->\t%f %d ==> %d \n", solutions.size(), solutions[i].chromosome->mean,
-		//		solutions[i].chromosome->clusters_count, solutions[i].index);
-		// print_population();
 		printf("Chromosome %d populated \n", i+1);
 		printf("\n");
 	}
@@ -32,11 +28,6 @@ void Population :: print_population() {
 	for (int i=0; i<solutions.size(); i++) {
 		printf("Chromosome no. %d: \t\t\t Mean: %f, Clusters: %d\n", solutions[i].index, solutions[i].mean,
 			solutions[i].clusters_count);
-
-		// printf("Chromosome no. %d: \t\t\t Mean: %f, Clusters: %d\n", solutions[i].index, solutions[i].chromosome->mean,
-			// solutions[i].chromosome->clusters_count);
-		// print_chromosome((solutions[i].chromosome));
-		// printf("\n");
 	}
 }
 
@@ -51,5 +42,5 @@ void Population::reset_index() {
 
 // Function to carry out crossover
 void Population::crossover() {
-	// Pass
+	// Pass for now
 }
