@@ -9,11 +9,17 @@
 #include <utility>
 #include <vector>
 
+
+// Utility values and dummy vectors for aiding default arguments for some functions
+// An implementation detail only
 const int inf = (int)1e9+100;
 static std::vector<int> DEFAULT_INT_VECTOR;
 static std::vector<float> DEFAULT_FLOAT_VECTOR;
 static std::random_device rd;
 
+
+// This stores the value of an instance :: specifically value of each property
+// This is structure which represents how the entire data is loaded into the system (i.e. in form of instances)
 struct instance {
 	float slength;
 	float swidth;
@@ -25,6 +31,16 @@ struct instance {
 	{}
 };
 
+
+// This structure the details of every cluster in the entire data set
+// The typical properties of each cluster are:
+//		1. Index of beginning node of the cluster
+//		2. Index of last node of the cluster
+//		3. The size of the cluster
+//		4. Instance which stores the mean of the cluster
+// The mean instance is important as it serves an integral role in determining the value of
+// the objective function : Minimise sum of average distances of cluster elements to cluster centre
+// The mean instance serves as the cluster center
 struct cluster {
 	int begin;
 	int size;
