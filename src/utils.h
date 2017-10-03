@@ -63,6 +63,7 @@ struct node {
 
 int uniform_int(int, int, int count=1, std::vector<int> &arr=DEFAULT_INT_VECTOR);
 float uniform_float(int, int, int count=1, std::vector<float> &arr=DEFAULT_FLOAT_VECTOR);
+float normal_float(int, int, int count=1, std::vector<float> &arr=DEFAULT_FLOAT_VECTOR);
 void print_instances(instance &);
 
 #endif // __UTILS_H__
