@@ -13,7 +13,8 @@ public:
 	Population(Data &, int);
 	void print_population();
 	void reset_index();
-	void crossover();
+	void crossover(int);
+	void mutation();
 };
 
 #endif // __POPULATIONH__

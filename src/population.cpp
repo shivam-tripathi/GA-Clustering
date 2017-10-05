@@ -10,12 +10,10 @@ Population :: Population(Data &data, int n) {
 	// n is the number of chromosomes, sent as arguments from the main function
 	printf("\nAdding chromosomes to the population ...\n\n");
 	for(int i=0; i<n; i++) {
-		// Chromosome *chromo = new Chromosome(data);
-		// solutions.push_back(Solution(chromo, i));
 		solutions.push_back(Chromosome(data, i));
 
-		printf("Chromosome %d populated \n", i+1);
-		printf("\n");
+		// Log: Chromosome indexed i set successfully
+		printf("Chromosome %d populated \n\n", i+1);
 	}
 
 	print_population();
@@ -33,7 +31,7 @@ void Population :: print_population() {
 
 
 // Function which resets the indexes of all chromomes after sorting
-void Population::reset_index() {
+void Population :: reset_index() {
 	for(int i=0; i<solutions.size(); i++) {
 		solutions[i].index = i;
 	}
@@ -41,6 +39,45 @@ void Population::reset_index() {
 
 
 // Function to carry out crossover
-void Population::crossover() {
+void Population :: crossover(int elite_withheld) {
+
+	// Generate parent chromosome index using normal distribution
+	// The most fit chromosome is at the mean region, and least fit chromosome at boundary
+	// Method: We generate random numbers of count (total chromosomes - number of elites held back)
+	// The random numbers are generated with mean = 10*number of chromosomes, with SD = 10*number of chromosomes
+	// Rest is self explanatory.
+	std::vector<float> cross_over;
+	cross_over.clear();
+	normal_float(0, 10*solutions.size(), (solutions.size()-elite_withheld), cross_over);
+
+	for (int i = 0; i < cross_over.size(); ++i) {
+		if (cross_over[i] < 0) cross_over[i] *= -1;
+		cross_over[i] = (int)cross_over[i] / 10;
+	}
+
+	for(int i=0; i<cross_over.size(); i++) {
+		printf("%lu >> %f | \n", solutions.size(), cross_over[i]);
+	}
+	printf("\n");
+
+	// Generate the next offspring
+	std::vector<Chromosome> offsprings;
+	for(int i=0; i<cross_over.size(); i++) {
+		int parent_number = cross_over[i];
+		offsprings.push_back(solutions[parent_number].crossover());
+	}
+
+	// Overwrite the lesser fit offsprings
+	int index = solutions.size()-1;
+	for(int j=0; j<offsprings.size(); j++) {
+		solutions[index--] = offsprings[j];
+	}
+
+	reset_index();
+}
+
+
+// Function to carry out mutation
+void Population :: mutation() {
 	// Pass for now
 }
