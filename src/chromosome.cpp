@@ -18,7 +18,8 @@ Chromosome :: Chromosome(const Chromosome &ch) : data(ch.data) {
 	mean = ch.mean;
 	element_count = ch.element_count;
 	clusters_count = ch.clusters_count;
-	// Copy remaining data
+	nodes = ch.nodes;
+	clusters = ch.clusters;
 }
 
 void Chromosome::operator = (const Chromosome &ch) {
@@ -27,7 +28,8 @@ void Chromosome::operator = (const Chromosome &ch) {
 	mean = ch.mean;
 	element_count = ch.element_count;
 	clusters_count = ch.clusters_count;
-	// Copy remaining data
+	nodes = ch.nodes;
+	clusters = ch.clusters;
 }
 
 
@@ -118,6 +120,75 @@ void Chromosome :: compute() {
 }
 
 
+Chromosome Chromosome :: crossover() {
+	printf("Crossing over chromosome %d \n", index);
+	print_chromosome();
+	Chromosome ch(this->data, 1);
+
+	std::vector <int> cluster_vector;
+	for(int i=0; i<clusters_count; i++) {
+		cluster_vector.push_back(i);
+	}
+
+	std::random_shuffle(cluster_vector.begin(), cluster_vector.end());
+
+	for(int i=0; i+1 < cluster_vector.size(); i++) {
+		// ch.cross_clusters(cluster_vector[gi], cluster_vector[i+1]);
+	}
+
+	return ch;
+}
+
+void Chromosome :: cross_clusters(int index1, int index2) {
+
+	printf("\t\tChromsomes %d, %d will be crossed.\n", index1, index2);
+
+	int size1 = clusters[index1].size;
+	int begin_node1 = clusters[index1].begin;
+
+	int size2 = clusters[index2].size;
+	int begin_node2 = clusters[index2].begin;
+
+
+	// assert(size1 < nodes.size() && size2 < nodes.size());
+
+	int break1 = uniform_int(0, size1);
+	int break2 = uniform_int(0, size2);
+
+	printf("%d : %d || %d : %d\n", index1, size1, index2, size2);
+	printf("Break point 1 is %d and break point 2 is %d\n", break1, break2);
+	// return;
+
+	int start1 = begin_node1;
+	for(int i=1; i<break1; i++) {
+		printf("1 %d <- %d\n", break1, i);
+		if (start1 == this->nodes[start1].r) break;
+		start1 = this->nodes[start1].r;
+	}
+
+	printf("1 Done.\n");
+
+	int start2 = begin_node2;
+	for(int i=1; i<break2; i++) {
+		printf("2 %d <- %d\n", break2, i);
+		if (start2 == this->nodes[start2].r) break;
+		start2 = this->nodes[start2].r;
+	}
+
+	printf("2 Done.\n");
+
+	this->nodes[start1].r = this->nodes[start2].r;
+	this->nodes[this->nodes[start2].r].l = start1;
+
+
+	this->nodes[start2].r = this->nodes[start1].r;
+	this->nodes[this->nodes[start1].r].l = start2;
+
+	printf("Done.\n");
+	// compute();
+ }
+
+
 // Does Chromosome a dominates b?
 bool cmp(Chromosome &a, Chromosome &b) {
 	// printf("%d cmp %f ||| %d cmp %f ==> ", a.clusters_count, a.mean, b.clusters_count, b.mean);
@@ -146,6 +217,11 @@ bool cmp(Chromosome &a, Chromosome &b) {
 	else return false;
 }
 
-void print_chromosome(Chromosome *chromo) {
-	printf("%f %d", chromo->mean, chromo->clusters_count);
+
+void Chromosome :: print_chromosome() {
+	printf("Chromosome: Mean - %f Cluster count - %d\n", mean, clusters_count);
+	for(int i=0; i<clusters_count; i++) {
+		printf("%d:\t", i);
+		print_clusters(clusters[i]);
+	}
 }
