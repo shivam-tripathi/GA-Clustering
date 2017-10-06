@@ -18,11 +18,13 @@ public:
 	Chromosome(Data &, int);
 	Chromosome(const Chromosome &);
 	void operator = (const Chromosome &);
+	Chromosome crossover();
+	void cross_clusters(int, int);
 	void compute();
 	void populate();
+	void print_chromosome();
 };
 
 bool cmp(Chromosome &, Chromosome &);
-void print_chromosome(Chromosome *);
 
 #endif // __CHROMOSOME_H__
